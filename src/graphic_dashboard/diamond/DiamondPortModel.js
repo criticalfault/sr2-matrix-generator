@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import {
-  LinkModel,
-  DiagramEngine,
+  //LinkModel,
+ // DiagramEngine,
   PortModel,
   DefaultLinkModel,
 } from 'storm-react-diagrams'

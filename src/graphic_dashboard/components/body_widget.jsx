@@ -19,14 +19,15 @@ export class BodyWidget extends React.Component {
         </div>
         <div className="content">
           <TrayWidget>
+            <h4>System Nodes</h4>
             <TrayItemWidget
-              model={{ type: 'diamond', name:"SPU", color:"green", systemType:'SPU', securityRating:1 }}
-              name="SPU"
+              model={{ type: 'diamond', name:'CPU', color:"green", systemType:'CPU',securityRating:1  }}
+              name="CPU"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'SAN', color:"green", systemType:'SAN',securityRating:1  }}
-              name="SAN"
+              model={{ type: 'diamond', name:"SPU", color:"green", systemType:'SPU', securityRating:1 }}
+              name="SPU"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
@@ -35,13 +36,34 @@ export class BodyWidget extends React.Component {
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
+              model={{ type: 'diamond', name:'SAN', color:"green", systemType:'SAN',securityRating:1  }}
+              name="SAN"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'IO', color:"green", systemType:'IO',securityRating:1  }}
+              name="IO"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
               model={{ type: 'diamond', name:'DS', color:"green", systemType:'DS',securityRating:1  }}
               name="DS"
               color="rgb(255,255,255)"
             />
+            <h4>IC</h4>
             <TrayItemWidget
-              model={{ type: 'diamond', name:'CPU', color:"green", systemType:'CPU',securityRating:1  }}
-              name="CPU"
+              model={{ type: 'out', name:'White IC', color:"white", subType:'', systemType:'IC', securityRating:1  }}
+              name="White IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'out', name:'IC', color:"gray", subType:'', systemType:'IC', securityRating:1  }}
+              name="Gray IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'out', name:'Black IC', subType:'', color:"black", systemType:'IC', securityRating:1  }}
+              name="Black IC"
               color="rgb(255,255,255)"
             />
           </TrayWidget>
@@ -58,16 +80,17 @@ export class BodyWidget extends React.Component {
                   .getNodes(),
               ).length
 
-              let node = null
-              if (data.type === 'in') {
+              let node = null;
+              
+              if(data.type == 'out'){
                 node = new DefaultNodeModel(
                   data.name+' ' + (nodesCount + 1),
-                  'rgb(192,255,0)',
+                  'rgb(0,192,255)',
                 )
                 node.addInPort('In')
                 node.addOutPort('Out')
-              } else if (data.type === 'diamond') {
-                node = new DiamondNodeModel(
+              }else{
+                  node = new DiamondNodeModel(
                   data.name+' ' + (nodesCount + 1),
                   256,
                   162,
@@ -76,14 +99,10 @@ export class BodyWidget extends React.Component {
                   data.securityRating,
                   data.systemType
                 )
-              } else {
-                node = new DefaultNodeModel(
-                  data.name+' ' + (nodesCount + 1),
-                  'rgb(0,192,255)',
-                )
-                node.addInPort('In')
-                node.addOutPort('Out')
               }
+              
+              
+             
               var points = this.props.app
                 .getDiagramEngine()
                 .getRelativeMousePoint(event)
