@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { PortWidget } from 'storm-react-diagrams'
-
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 export class DiamonNodeWidget extends React.Component {
   constructor(props) {
     super(props)
@@ -73,9 +73,18 @@ export class DiamonNodeWidget extends React.Component {
           fontSize="12"
           fontWeight="bold"
           fill="#000000">
-          <tspan x="7" y="90">Cancel Alert</tspan>
-          <tspan x="7" y="105">Display Map</tspan>
-          <tspan x="7" y="120">Shutdown</tspan>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Cancel Alert')}>
+            <tspan x="7" y="90">Cancel Alert</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Change Node')}>
+          <tspan x="7" y="105">Change Node</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Display Map')}>
+          <tspan x="7" y="120">Display Map</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Shutdown')}>
+          <tspan x="7" y="135">Shutdown</tspan>
+          </OverlayTrigger>
         </text>);
       case 'SPU':
         return (<text 
@@ -94,8 +103,12 @@ export class DiamonNodeWidget extends React.Component {
           fontSize="12"
           fontWeight="bold"
           fill="#000000">
-          <tspan x="7" y="90">Control</tspan>
-          <tspan x="7" y="105">Sensor Readout</tspan>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Control')}>
+            <tspan x="7" y="90">Control</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Sensor Readout')}>
+            <tspan x="7" y="105">Sensor Readout</tspan>
+          </OverlayTrigger>
         </text>);
       case 'SAN':
         return (<text 
@@ -104,7 +117,9 @@ export class DiamonNodeWidget extends React.Component {
           fontSize="12"
           fontWeight="bold"
           fill="#000000">
-          <tspan x="7" y="90">Lockout</tspan>
+            <OverlayTrigger placement="left" overlay={this.tooltip('Lockout')}>
+              <tspan x="7" y="90">Lockout</tspan>
+            </OverlayTrigger>
         </text>);
       case 'IO':
         return (<text 
@@ -113,8 +128,12 @@ export class DiamonNodeWidget extends React.Component {
           fontSize="12"
           fontWeight="bold"
           fill="#000000">
-          <tspan x="7" y="90">Display Messages</tspan>
-          <tspan x="7" y="105">Lockout</tspan>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Display Messages')}>
+            <tspan x="7" y="90">Display Messages</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Lockout')}>
+            <tspan x="7" y="105">Lockout</tspan>
+          </OverlayTrigger>
         </text>);
       case 'DS':
         return (<text 
@@ -123,15 +142,81 @@ export class DiamonNodeWidget extends React.Component {
           fontSize="12"
           fontWeight="bold"
           fill="#000000">
-          <tspan x="7" y="90">Erase File</tspan>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Erase File')}>
+            <tspan tspan x="7" y="90">Erase File</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Edit File')}>
           <tspan x="7" y="105">Edit File</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Read File')}>
           <tspan x="7" y="120">Read File</tspan>
+          </OverlayTrigger>
+          <OverlayTrigger placement="left" overlay={this.tooltip('Transfer File')}>
           <tspan x="7" y="135">Transfer File</tspan>
+          </OverlayTrigger>
         </text>);
       default:
         return [];
     }
   };
+
+  tooltip = (operation) => {
+    switch(operation){
+      case 'Cancel Alert':
+        return (<Tooltip id="tooltip">
+                <strong>Cancel Alert :</strong> Cancels a passive alert. Active Alerts cannot be canceled.
+              </Tooltip>)
+      case 'Change Node':
+        return (<Tooltip id="tooltip">
+                <strong>Change Node :</strong> Teleport to any node connected to the system. This is one way.
+              </Tooltip>)
+      case 'Control':
+        return (<Tooltip id="tooltip">
+                <strong>Control :</strong> Controls whatever the node is connected too. (eg. Boiling over a coffee maker, halting a factory line)
+              </Tooltip>)
+      case 'Sensor Readout':
+        return (<Tooltip id="tooltip">
+                <strong>Sensor Readout :</strong> Read any sensors or cameras connected. 
+              </Tooltip>)
+      case 'Shutdown':
+        return (<Tooltip id="tooltip">
+                <strong>Shutdown :</strong> Crash the system. Dumps everyone connected.
+              </Tooltip>)
+      case 'Display Map':
+        return (<Tooltip id="tooltip">
+                <strong>Display Map :</strong>Displays the system map. Security and Color of each node. It does not show IC or Files however.
+              </Tooltip>)
+      case 'Display Messages':
+        return (<Tooltip id="tooltip">
+                <strong>Display Messages :</strong>Display a message on the terminal of the I/O Controls
+              </Tooltip>)
+      case 'Lockout':
+        return (<Tooltip id="tooltip">
+                <strong>Lockout :</strong> Lock the I/O device. Nothing it controls can contact the computer now. If this is a cyberterminal, it must be crashed in cybercombat first.
+              </Tooltip>)
+      case 'Erase File':
+        return (<Tooltip id="tooltip">
+              <strong>Erase File :</strong> Wipe out one file (eg erase a police record)
+            </Tooltip>)
+      case 'Edit File':
+        return (<Tooltip id="tooltip">
+              <strong>Edit File :</strong> Change the contents of a file (eg give someone straight A's). Also covers uploading files.
+            </Tooltip>)
+      case 'Read File':
+        return (<Tooltip id="tooltip">
+              <strong>Read File :</strong> Read the contents of a file. 
+            </Tooltip>)
+      case 'Transfer File':
+        return (<Tooltip id="tooltip">
+            <strong>Transfer File :</strong> Copy data into a cyberdeck storage. The decker downloads MPs equal to their I/O per action. They must stay in until finished or all is lost.
+          </Tooltip>)
+      default:
+        return (<Tooltip id="tooltip"></Tooltip>)
+        break;
+    }
+
+    
+    }
 
   getNodeIcon = (type,nodeID) => {
     switch(type){
@@ -327,7 +412,7 @@ export class DiamonNodeWidget extends React.Component {
             <option value='orange'>Orange</option>
             <option value='red'>Red</option>
           </select>
-          <select  onChange={this.handleSecurityChange}>
+          <select onChange={this.handleSecurityChange}>
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
