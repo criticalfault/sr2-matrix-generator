@@ -11,6 +11,11 @@ export class BodyWidget extends React.Component {
     this.state = {}
   }
 
+
+  handleSaveProject = (event) => {
+    console.log(this.props.app.diagramEngine.diagramModel);
+  }
+
   render() {
     return (
       <div className="body">
@@ -19,7 +24,12 @@ export class BodyWidget extends React.Component {
         </div>
         <div className="content">
           <TrayWidget>
-            <h4>System Nodes</h4>
+            <h4 style={{color:'white'}}>Project Settings</h4>
+            <div>
+              <button onClick={this.handleSaveProject} style={{'width':'100%'}}>Save Project</button>
+              <button style={{'width':'100%'}}>Load Project</button>
+            </div>
+            <h4 style={{color:'white'}}>System Nodes</h4>
             <TrayItemWidget
               model={{ type: 'diamond', name:'CPU', color:"green", systemType:'CPU',securityRating:1  }}
               name="CPU"
@@ -50,7 +60,7 @@ export class BodyWidget extends React.Component {
               name="DS"
               color="rgb(255,255,255)"
             />
-            <h4>IC</h4>
+            <h4 style={{color:'white'}}>IC</h4>
             <TrayItemWidget
               model={{ type: 'out', name:'White IC', color:"white", subType:'', systemType:'IC', securityRating:1  }}
               name="White IC"
@@ -66,6 +76,7 @@ export class BodyWidget extends React.Component {
               name="Black IC"
               color="rgb(255,255,255)"
             />
+           
           </TrayWidget>
           <div
             className="diagram-layer"
@@ -84,14 +95,14 @@ export class BodyWidget extends React.Component {
               
               if(data.type == 'out'){
                 node = new DefaultNodeModel(
-                  data.name+' ' + (nodesCount + 1),
+                  data.name,
                   'rgb(0,192,255)',
                 )
                 node.addInPort('In')
                 node.addOutPort('Out')
               }else{
                   node = new DiamondNodeModel(
-                  data.name+' ' + (nodesCount + 1),
+                  data.name,
                   256,
                   162,
                   data.name,

@@ -32,7 +32,7 @@ export class DiamonNodeWidget extends React.Component {
         return 'Central Processor';
       case 'SPU':
         return 'Sub-Processor ';
-      case 'SM':
+      case 'SN':
         return 'Slave Module';
       case 'SAN':
         return 'System Access Node';
@@ -67,17 +67,67 @@ export class DiamonNodeWidget extends React.Component {
   getAvailableCommands = (type) => {
     switch (type) {
       case 'CPU':
-        return ['Cancel Alert', 'Display Map', 'Shutdown'];
+        return (<text 
+          id="Placeholder"
+          fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+          fontSize="12"
+          fontWeight="bold"
+          fill="#000000">
+          <tspan x="7" y="90">Cancel Alert</tspan>
+          <tspan x="7" y="105">Display Map</tspan>
+          <tspan x="7" y="120">Shutdown</tspan>
+        </text>);
       case 'SPU':
-        return ['Cancel Alert', 'Display Map', 'Shutdown'];
-      case 'SM':
-        return ['Control', 'Sensor Readout'];
+        return (<text 
+          id="Placeholder"
+          fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+          fontSize="12"
+          fontWeight="bold"
+          fill="#000000">
+          <tspan x="7" y="90">None</tspan>
+          
+        </text>);
+      case 'SN':
+        return (<text 
+          id="Placeholder"
+          fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+          fontSize="12"
+          fontWeight="bold"
+          fill="#000000">
+          <tspan x="7" y="90">Control</tspan>
+          <tspan x="7" y="105">Sensor Readout</tspan>
+        </text>);
       case 'SAN':
-        return ['Lockout'];
-      case 'I/O':
-        return ['Display Messages', 'Lockout'];
+        return (<text 
+          id="Placeholder"
+          fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+          fontSize="12"
+          fontWeight="bold"
+          fill="#000000">
+          <tspan x="7" y="90">Lockout</tspan>
+        </text>);
+      case 'IO':
+        return (<text 
+          id="Placeholder"
+          fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+          fontSize="12"
+          fontWeight="bold"
+          fill="#000000">
+          <tspan x="7" y="90">Display Messages</tspan>
+          <tspan x="7" y="105">Lockout</tspan>
+        </text>);
       case 'DS':
-        return ['Erase File', 'Edit File', 'Read File', 'Transfer File'];
+        return (<text 
+          id="Placeholder"
+          fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+          fontSize="12"
+          fontWeight="bold"
+          fill="#000000">
+          <tspan x="7" y="90">Erase File</tspan>
+          <tspan x="7" y="105">Edit File</tspan>
+          <tspan x="7" y="120">Read File</tspan>
+          <tspan x="7" y="135">Transfer File</tspan>
+        </text>);
       default:
         return [];
     }
@@ -98,9 +148,21 @@ export class DiamonNodeWidget extends React.Component {
                 78.86582838174552 161.86582838174547,
                 51.80602337443568 200.1341716182545,
                 51.80602337443567 227.19397662556432,
-                78.86582838174547" />);
+                78.86582838174547" />
+                );
       case "SPU":
-        //Pentagron
+        //Hexagon
+        return (<polygon stroke="#979797"
+        id={nodeID}
+        fillRule="nonzero"
+        fill='red' 
+        points="227.19397662556435,
+                117.1341716182545 180.1341716182545,
+                144.19397662556435 134.80602337443565,
+                117.1341716182545 134.80602337443565,
+                78.86582838174552 178.86582838174547,
+                51.80602337443567 227.19397662556432,
+                78.86582838174547" />);
 
       break;
 
@@ -139,7 +201,8 @@ export class DiamonNodeWidget extends React.Component {
           fill='blue'
           width="25"
           height="25"
-          points="190,90 50,500 300,200" class="triangle" />
+          x="144"
+          points="160,90 150,500 300,280" class="triangle" />
           )
       break;
       
@@ -213,10 +276,22 @@ export class DiamonNodeWidget extends React.Component {
                 fontWeight="normal"
                 fill="#000000"
               >
-                <tspan x="7" y="104">
+                <tspan x="7" y="60">
                   {this.getTypeLabel(text)}
                 </tspan>
               </text>
+              <text
+                id="Placeholder"
+                fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+                fontSize="12"
+                fontWeight="normal"
+                fill="#000000"
+              >
+              <tspan x="7" y="74">
+                Operations:
+                </tspan>
+              </text>
+              {this.getAvailableCommands(type)}
             </g>
           </g>
         </g>
@@ -224,9 +299,14 @@ export class DiamonNodeWidget extends React.Component {
     )
   }
 
+  handleSecurityChange = (event) => {
+    
+  }
+
   handleColorChange = (event) => {
     console.log(event.target.value);
     document.getElementById('node-color-'+this.props.node.id).style.fill = event.target.value;
+    this.getSystemRating(event.target.value);
   }
 
   render() {
@@ -247,7 +327,7 @@ export class DiamonNodeWidget extends React.Component {
             <option value='orange'>Orange</option>
             <option value='red'>Red</option>
           </select>
-          <select>
+          <select  onChange={this.handleSecurityChange}>
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
