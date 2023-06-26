@@ -1,19 +1,62 @@
-import * as React from 'react'
+import React from 'react';
 import * as _ from 'lodash'
 import { TrayWidget } from './tray_widget'
 import { TrayItemWidget } from './tray_item_widget'
-import { DefaultNodeModel, DiagramWidget } from 'storm-react-diagrams'
+import { DefaultNodeModel, DiagramWidget, DiagramModel } from 'storm-react-diagrams'
 import { DiamondNodeModel } from './../diamond/DiamondNodeModel'
+import { Button, Modal } from 'react-bootstrap'
 
 export class BodyWidget extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      showModal: false,
+      projectData: null
+    }
   }
+
+  handleModalClose = () => {
+    this.setState({ showModal: false });
+  };
+
+  handleModalOpen = () => {
+    this.setState({ showModal: true });
+  };
 
 
   handleSaveProject = (event) => {
-    console.log(this.props.app.diagramEngine.diagramModel);
+    //Serialize the Diagram, then offload it to the user!
+    let systemJSON =JSON.stringify(this.props.app.diagramEngine.diagramModel.serializeDiagram());
+    const blob = new Blob([systemJSON], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+  
+    // Create a link element and trigger the download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'project.json';
+    link.click();
+  
+    // Clean up by revoking the object URL
+    URL.revokeObjectURL(url);
+  }
+
+  handleLoadProject = (event) => {
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onload = (e) => {
+      const fileData = e.target.result;
+      var newModal = new DiagramModel();
+      newModal.deSerializeDiagram(JSON.parse(fileData), this.props.app.diagramEngine);
+      this.props.app.diagramEngine.setDiagramModel(newModal);
+    };
+  
+   
+
+
+
+    
   }
 
   render() {
@@ -26,8 +69,25 @@ export class BodyWidget extends React.Component {
           <TrayWidget>
             <h4 style={{color:'white'}}>Project Settings</h4>
             <div>
-              <button onClick={this.handleSaveProject} style={{'width':'100%'}}>Save Project</button>
-              <button style={{'width':'100%'}}>Load Project</button>
+              <Button bsStyle="info" onClick={this.handleSaveProject} >Save Project</Button>              
+              <Button bsStyle="info" onClick={this.handleModalOpen} >Load Project</Button><br></br>
+              <Modal show={this.state.showModal} onHide={this.handleModalClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Upload Project</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <input type="file" accept=".json" onChange={this.handleLoadProject} />
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleModalClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={this.handleModalClose}>
+                    Upload
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+             
             </div>
             <h4 style={{color:'white'}}>System Nodes</h4>
             <TrayItemWidget
@@ -93,7 +153,7 @@ export class BodyWidget extends React.Component {
 
               let node = null;
               
-              if(data.type == 'out'){
+              if(data.type === 'out'){
                 node = new DefaultNodeModel(
                   data.name,
                   'rgb(0,192,255)',
