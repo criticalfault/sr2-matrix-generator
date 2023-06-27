@@ -22,3 +22,19 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.node-color-blue{
+  fill:blue;
+}
+
+.node-color-green{
+  fill:green;
+}
+
+.node-color-orange{
+  fill:orange;
+}
+
+.node-color-red{
+  fill:red;
+}

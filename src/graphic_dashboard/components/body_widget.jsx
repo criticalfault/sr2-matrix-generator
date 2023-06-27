@@ -41,22 +41,16 @@ export class BodyWidget extends React.Component {
   }
 
   handleLoadProject = (event) => {
-
     const file = event.target.files[0];
     const reader = new FileReader();
-  
     reader.onload = (e) => {
       const fileData = e.target.result;
       var newModal = new DiagramModel();
       newModal.deSerializeDiagram(JSON.parse(fileData), this.props.app.diagramEngine);
-      this.props.app.diagramEngine.setDiagramModel(newModal);
-    };
-  
-   
-
-
-
-    
+      this.props.app.getDiagramEngine().setDiagramModel(newModal);
+      this.forceUpdate()
+    }    
+    reader.readAsText(file); 
   }
 
   render() {
@@ -69,8 +63,8 @@ export class BodyWidget extends React.Component {
           <TrayWidget>
             <h4 style={{color:'white'}}>Project Settings</h4>
             <div>
-              <Button bsStyle="info" onClick={this.handleSaveProject} >Save Project</Button>              
-              <Button bsStyle="info" onClick={this.handleModalOpen} >Load Project</Button><br></br>
+              <Button onClick={this.handleSaveProject} >Save Project</Button>              
+              <Button onClick={this.handleModalOpen} >Load Project</Button><br></br>
               <Modal show={this.state.showModal} onHide={this.handleModalClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Upload Project</Modal.Title>
@@ -91,48 +85,48 @@ export class BodyWidget extends React.Component {
             </div>
             <h4 style={{color:'white'}}>System Nodes</h4>
             <TrayItemWidget
-              model={{ type: 'diamond', name:'CPU', color:"green", systemType:'CPU',securityRating:1  }}
+              model={{ type: 'diamond', name:'CPU', color:"Green", systemType:'CPU',securityRating:1  }}
               name="CPU"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:"SPU", color:"green", systemType:'SPU', securityRating:1 }}
+              model={{ type: 'diamond', name:"SPU", color:"Green", systemType:'SPU', securityRating:1 }}
               name="SPU"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'SN', color:"green", systemType:'SN',securityRating:1  }}
+              model={{ type: 'diamond', name:'SN', color:"Green", systemType:'SN',securityRating:1  }}
               name="SN"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'SAN', color:"green", systemType:'SAN',securityRating:1  }}
+              model={{ type: 'diamond', name:'SAN', color:"Green", systemType:'SAN',securityRating:1  }}
               name="SAN"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'IO', color:"green", systemType:'IO',securityRating:1  }}
+              model={{ type: 'diamond', name:'IO', color:"Green", systemType:'IO',securityRating:1  }}
               name="IO"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'DS', color:"green", systemType:'DS',securityRating:1  }}
+              model={{ type: 'diamond', name:'DS', color:"Green", systemType:'DS',securityRating:1  }}
               name="DS"
               color="rgb(255,255,255)"
             />
             <h4 style={{color:'white'}}>IC</h4>
             <TrayItemWidget
-              model={{ type: 'out', name:'White IC', color:"white", subType:'', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'White IC', color:"White", subType:'', systemType:'IC', securityRating:1  }}
               name="White IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'out', name:'IC', color:"gray", subType:'', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Gray IC', color:"Gray", subType:'', systemType:'IC', securityRating:1  }}
               name="Gray IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'out', name:'Black IC', subType:'', color:"black", systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Black IC',  color:"Black", subType:'', systemType:'IC', securityRating:1  }}
               name="Black IC"
               color="rgb(255,255,255)"
             />

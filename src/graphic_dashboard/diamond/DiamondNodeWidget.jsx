@@ -11,6 +11,21 @@ export class DiamonNodeWidget extends React.Component {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
+  getSystemRatingRange = (color) => {
+    switch (color) {
+      case 'Blue':
+        return [1,2,3,4,5,6];
+      case 'Green':
+        return [2,3,4,5,6,7];
+      case 'Orange':
+        return [3,4,5,6,7,8];
+      case 'Red':
+        return [2,3,4,5,6,7,8,9,10,11,12];
+      default:
+        return [1,2,3,4,5,6];
+    }
+  }
+
   getSystemRating = (color) => {
     switch (color) {
       case 'Blue':
@@ -146,13 +161,13 @@ export class DiamonNodeWidget extends React.Component {
             <tspan tspan x="7" y="90">Erase File</tspan>
           </OverlayTrigger>
           <OverlayTrigger placement="left" overlay={this.tooltip('Edit File')}>
-          <tspan x="7" y="105">Edit File</tspan>
+            <tspan x="7" y="105">Edit File</tspan>
           </OverlayTrigger>
           <OverlayTrigger placement="left" overlay={this.tooltip('Read File')}>
-          <tspan x="7" y="120">Read File</tspan>
+            <tspan x="7" y="120">Read File</tspan>
           </OverlayTrigger>
           <OverlayTrigger placement="left" overlay={this.tooltip('Transfer File')}>
-          <tspan x="7" y="135">Transfer File</tspan>
+            <tspan x="7" y="135">Transfer File</tspan>
           </OverlayTrigger>
         </text>);
       default:
@@ -212,19 +227,32 @@ export class DiamonNodeWidget extends React.Component {
           </Tooltip>)
       default:
         return (<Tooltip id="tooltip"></Tooltip>)
-        break;
     }
+  }
 
-    
+  handleClassChanges = (color) => {
+    switch(color){
+      case 'Blue':
+        return 'node-color-blue'
+      case 'Green' :
+        return 'node-color-green';
+      case 'Orange':
+        return 'node-color-orange';
+      case 'Red':
+        return 'node-color-red';
+      default:
+        return 'node-color-blue'
     }
+  }
 
-  getNodeIcon = (type,nodeID) => {
+  getNodeIcon = (type,nodeID, color) => {
     switch(type){
       case "CPU":
-        return (<polygon stroke="#979797"
+        return (<polygon className={this.handleClassChanges(color)}
+        stroke="#979797"
         id={nodeID}
         fillRule="nonzero"
-        fill='red' 
+    
         points="227.19397662556435,
                 117.1341716182545 200.1341716182545,
                 144.19397662556435 161.8658283817455,
@@ -237,10 +265,12 @@ export class DiamonNodeWidget extends React.Component {
                 );
       case "SPU":
         //Hexagon
-        return (<polygon stroke="#979797"
+        return (<polygon 
+          className={this.handleClassChanges(color)}
+        stroke="#979797"
         id={nodeID}
         fillRule="nonzero"
-        fill='red' 
+      
         points="227.19397662556435,
                 117.1341716182545 180.1341716182545,
                 144.19397662556435 134.80602337443565,
@@ -249,67 +279,61 @@ export class DiamonNodeWidget extends React.Component {
                 51.80602337443567 227.19397662556432,
                 78.86582838174547" />);
 
-      break;
-
       case "SAN":
         //Reactangle
         return (<rect
+          className={this.handleClassChanges(color)}
           id={nodeID}
           stroke="#979797"
           fillRule="nonzero"
-          fill='blue'
+          
           x="130"
           y="87"
           width="100"
           height="25"
-        />)
-      break;
+        />);
 
       case "SN":
         //Circle
       return ( <circle
+        className={this.handleClassChanges(color)}
                   id={nodeID}
                   stroke="#979797"
                   fillRule="nonzero"
-                  fill='blue'
                   cx="180" 
                   cy="100" 
                   r="40"
               />)
-      break;
-      
       case "IO":
         //Triangle
-        return (<polygon id={nodeID}
+        return (<polygon 
+          className={this.handleClassChanges(color)}
+          id={nodeID}
           stroke="#979797"
           fillRule="nonzero"
-          fill='blue'
+         
           width="25"
           height="25"
           x="144"
-          points="160,90 150,500 300,280" class="triangle" />
+          points="160,90 150,500 300,280"/>
           )
-      break;
-      
       case "DS":
         return (<rect
           id={nodeID}
           stroke="#979797"
           fillRule="nonzero"
-          fill='blue'
+          className={this.handleClassChanges(color)}
           x="144"
           y="75"
           width="50"
           height="50"
         />)
-      break;
-
       default:
         return (<rect
           id={nodeID}
           stroke="#979797"
           fillRule="nonzero"
-          fill='blue'
+          className={this.handleClassChanges(color)}
           x="144"
           y="75"
           width="50"
@@ -344,7 +368,7 @@ export class DiamonNodeWidget extends React.Component {
                 height="159"
                 rx="8"
               />
-              {this.getNodeIcon(type,nodeID)}
+              {this.getNodeIcon(type,nodeID,color)}
                
               <path
                 d="M1.5,43.5 L254.5,43.5"
@@ -385,18 +409,23 @@ export class DiamonNodeWidget extends React.Component {
   }
 
   handleSecurityChange = (event) => {
-    
+    this.props.node.extras.securityRating = event.target.value;
+  }
+
+  selectIfRatingEqs = (randomRating,checkRating) => {
+    if(randomRating === checkRating){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   handleColorChange = (event) => {
-    console.log(event.target.value);
+    this.props.node.extras.color = event.target.value;
     document.getElementById('node-color-'+this.props.node.id).style.fill = event.target.value;
-    this.getSystemRating(event.target.value);
   }
 
   render() {
-    let randomRating = this.getSystemRating(this.props.node.color);
-
     return (
       <div
         style={{
@@ -407,30 +436,21 @@ export class DiamonNodeWidget extends React.Component {
       >
         <div style={{position: "relative",top:"35px"}}>
           <select onChange={this.handleColorChange}>
-            <option value='blue'>Blue</option>
-            <option value='green'>Green</option>
-            <option value='orange'>Orange</option>
-            <option value='red'>Red</option>
+            <option value='Blue'>Blue</option>
+            <option value='Green'>Green</option>
+            <option value='Orange'>Orange</option>
+            <option value='Red'>Red</option>
           </select>
           <select onChange={this.handleSecurityChange}>
-            <option value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
-            <option value='4'>4</option>
-            <option value='5'>5</option>
-            <option value='6'>6</option>
-            <option value='7'>7</option>
-            <option value='8'>8</option>
-            <option value='9'>9</option>
-            <option value='10'>10</option>
-            <option value='11'>11</option>
-            <option value='12'>12</option>
-            <option value='13'>13</option>
-            <option value='14'>14</option>
-          </select>
+            {
+             this.getSystemRatingRange(this.props.node.extras.color).map((item,index) => {   
+              return (<option key={index} value={item} checked={this.selectIfRatingEqs(this.props.node.extras.securityRating,item)}>{item}</option>)
+             })
+            }
+          </select> 
         </div>
-        <svg width={this.props.node.width} height={this.props.node.height}>
-          {this.getSVGInnerHTML(this.props.node.text, this.props.node.color, this.props.node.systemType, this.props.node.id)}
+        <svg width={this.props.node.extras.width} height={this.props.node.extras.height}>
+          {this.getSVGInnerHTML(this.props.node.extras.text, this.props.node.extras.color, this.props.node.extras.systemType, this.props.node.id)}
         </svg>
 
         <div

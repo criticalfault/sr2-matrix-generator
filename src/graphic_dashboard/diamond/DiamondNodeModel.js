@@ -16,12 +16,12 @@ export class DiamondNodeModel extends NodeModel {
     this.addPort(new DiamondPortModel('left'))
     this.addPort(new DiamondPortModel('bottom'))
     this.addPort(new DiamondPortModel('right'))
-    this.name = name
-    this.width = width
-    this.height = height
-    this.text = text
-    this.color = color
-    this.securityRating = securityRating
-    this.systemType = systemType
+    this.extras.width = width
+    this.extras.height = height
+    this.extras.name = name
+    this.extras.text = text
+    this.extras.color = color
+    this.extras.securityRating = securityRating
+    this.extras.systemType = systemType
   }
 }
