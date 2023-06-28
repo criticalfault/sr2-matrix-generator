@@ -311,11 +311,7 @@ export class DiamonNodeWidget extends React.Component {
           id={nodeID}
           stroke="#979797"
           fillRule="nonzero"
-         
-          width="25"
-          height="25"
-          x="144"
-          points="160,90 150,500 300,280"/>
+          points="180 65, 150 140, 210 140"/>
           )
       case "DS":
         return (<rect
@@ -457,7 +453,7 @@ export class DiamonNodeWidget extends React.Component {
           style={{
             position: 'absolute',
             zIndex: 10,
-            left: this.props.node.width / 2 - 8,
+            left: this.props.node.extras.width / 2 - 8,
             top: 15,
           }}
         >
@@ -468,8 +464,8 @@ export class DiamonNodeWidget extends React.Component {
           style={{
             position: 'absolute',
             zIndex: 10,
-            left: this.props.node.width - 8,
-            top: this.props.node.height / 2 + 20,
+            left: this.props.node.extras.width - 8,
+            top: this.props.node.extras.height / 2 + 20,
           }}
         >
           <PortWidget name="right" node={this.props.node} />
@@ -479,8 +475,8 @@ export class DiamonNodeWidget extends React.Component {
           style={{
             position: 'absolute',
             zIndex: 10,
-            left: this.props.node.width / 2 - 8,
-            top: this.props.node.height + 20,
+            left: this.props.node.extras.width / 2 - 8,
+            top: this.props.node.extras.height + 20,
           }}
         >
           <PortWidget name="bottom" node={this.props.node} />
@@ -490,7 +486,7 @@ export class DiamonNodeWidget extends React.Component {
           style={{
             position: 'absolute',
             zIndex: 10,
-            top: this.props.node.height / 2 + 20,
+            top: this.props.node.extras.height / 2 + 20,
             left: -8,
           }}
         >

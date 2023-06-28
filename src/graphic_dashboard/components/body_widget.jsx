@@ -85,32 +85,32 @@ export class BodyWidget extends React.Component {
             </div>
             <h4 style={{color:'white'}}>System Nodes</h4>
             <TrayItemWidget
-              model={{ type: 'diamond', name:'CPU', color:"Green", systemType:'CPU',securityRating:1  }}
+              model={{ type: 'diamond', name:'CPU', color:"Blue", systemType:'CPU',securityRating:1  }}
               name="CPU"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:"SPU", color:"Green", systemType:'SPU', securityRating:1 }}
+              model={{ type: 'diamond', name:"SPU", color:"Blue", systemType:'SPU', securityRating:1 }}
               name="SPU"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'SN', color:"Green", systemType:'SN',securityRating:1  }}
+              model={{ type: 'diamond', name:'SN', color:"Blue", systemType:'SN',securityRating:1  }}
               name="SN"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'SAN', color:"Green", systemType:'SAN',securityRating:1  }}
+              model={{ type: 'diamond', name:'SAN', color:"Blue", systemType:'SAN',securityRating:1  }}
               name="SAN"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'IO', color:"Green", systemType:'IO',securityRating:1  }}
+              model={{ type: 'diamond', name:'IO', color:"Blue", systemType:'IO',securityRating:1  }}
               name="IO"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'DS', color:"Green", systemType:'DS',securityRating:1  }}
+              model={{ type: 'diamond', name:'DS', color:"Blue", systemType:'DS',securityRating:1  }}
               name="DS"
               color="rgb(255,255,255)"
             />
