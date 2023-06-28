@@ -432,7 +432,7 @@ export class DiamonNodeWidget extends React.Component {
           height: this.props.node.height,
         }}
       >
-        <div style={{position: "relative",top:"32px"}}>
+        <div style={{position: "relative",top:"37px"}}>
         <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}: </span>
           <select onChange={this.handleColorChange}>
             <option value='Blue'>Blue</option>
