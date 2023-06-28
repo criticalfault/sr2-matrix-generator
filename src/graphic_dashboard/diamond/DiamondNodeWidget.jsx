@@ -365,9 +365,9 @@ export class DiamonNodeWidget extends React.Component {
                 rx="8"
               />
               {this.getNodeIcon(type,nodeID,color)}
-               
+               {/* Divider Lin */}
               <path
-                d="M1.5,43.5 L254.5,43.5"
+                d="M1.5,48.5 L254.5,48.5"
                 id="Line"
                 stroke="#4A4A4A"
                 strokeWidth="3"
@@ -377,12 +377,14 @@ export class DiamonNodeWidget extends React.Component {
               <text
                 id="Placeholder"
                 fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
-                fontSize="12"
+                fontSize="16"
+                text-align="center"
+                alignmentBaseline='middle'
                 fontWeight="normal"
                 fill="#000000"
               >
-                <tspan x="7" y="60">
-                  {this.getTypeLabel(text)}
+                <tspan x="75" y="45">
+                  {}
                 </tspan>
               </text>
               <text
@@ -430,7 +432,8 @@ export class DiamonNodeWidget extends React.Component {
           height: this.props.node.height,
         }}
       >
-        <div style={{position: "relative",top:"35px"}}>
+        <div style={{position: "relative",top:"32px"}}>
+        <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}: </span>
           <select onChange={this.handleColorChange}>
             <option value='Blue'>Blue</option>
             <option value='Green'>Green</option>
@@ -443,7 +446,9 @@ export class DiamonNodeWidget extends React.Component {
               return (<option key={index} value={item} checked={this.selectIfRatingEqs(this.props.node.extras.securityRating,item)}>{item}</option>)
              })
             }
-          </select> 
+          </select>
+         
+         
         </div>
         <svg width={this.props.node.extras.width} height={this.props.node.extras.height}>
           {this.getSVGInnerHTML(this.props.node.extras.text, this.props.node.extras.color, this.props.node.extras.systemType, this.props.node.id)}
