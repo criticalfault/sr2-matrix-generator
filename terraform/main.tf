@@ -15,5 +15,5 @@ terraform {
 }
 
 provider "digitalocean" {
-  token = var.SR3-DO
+  token = var.SR2-DO
 }

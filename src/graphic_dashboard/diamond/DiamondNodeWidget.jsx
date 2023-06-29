@@ -56,7 +56,7 @@ export class DiamonNodeWidget extends React.Component {
       case 'DS':
         return 'Datastore';
       default:
-        return 'Unknown';
+        return type;
     }
   };
 
@@ -325,22 +325,25 @@ export class DiamonNodeWidget extends React.Component {
           height="50"
         />)
       default:
-        return (<rect
-          id={nodeID}
-          stroke="#979797"
-          fillRule="nonzero"
-          className={this.handleClassChanges(color)}
-          x="144"
-          y="75"
-          width="50"
-          height="50"
-        />)
+        return;
     }
   }
 
   getSVGInnerHTML = (text, color, type, id) => {
-    let nodeID ='node-color-'+id;   
-
+    let nodeID ='node-color-'+id;
+    let optionsText = '';
+    if(type === "CPU" || type === "SPU" || type === "IO" || type === "DS" || type === "SAN" || type === "SN"){
+      optionsText = (<text
+        id="Placeholder"
+        fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
+        fontSize="12"
+        fontWeight="normal"
+        fill="#000000">
+        <tspan x="7" y="74">
+        Operations:
+        </tspan>
+      </text>)
+    }
     return (
       <React.Fragment>
           <g
@@ -384,20 +387,10 @@ export class DiamonNodeWidget extends React.Component {
                 fill="#000000"
               >
                 <tspan x="75" y="45">
-                  {}
+                  
                 </tspan>
               </text>
-              <text
-                id="Placeholder"
-                fontFamily="SanFranciscoDisplay-Regular, San Francisco Display"
-                fontSize="12"
-                fontWeight="normal"
-                fill="#000000"
-              >
-              <tspan x="7" y="74">
-                Operations:
-                </tspan>
-              </text>
+              {optionsText}
               {this.getAvailableCommands(type)}
             </g>
           </g>
@@ -424,32 +417,39 @@ export class DiamonNodeWidget extends React.Component {
   }
 
   render() {
-    return (
-      <div
-        style={{
-          position: 'relative',
-          width: this.props.node.width,
-          height: this.props.node.height,
-        }}
-      >
+    var header = ''
+    if(this.props.node.extras.systemType === "IC"){
+      header =(
         <div style={{position: "relative",top:"37px"}}>
-        <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}: </span>
-          <select onChange={this.handleColorChange}>
-            <option value='Blue'>Blue</option>
-            <option value='Green'>Green</option>
-            <option value='Orange'>Orange</option>
-            <option value='Red'>Red</option>
-          </select>
-          <select onChange={this.handleSecurityChange}>
-            {
-             this.getSystemRatingRange(this.props.node.extras.color).map((item,index) => {   
-              return (<option key={index} value={item} checked={this.selectIfRatingEqs(this.props.node.extras.securityRating,item)}>{item}</option>)
-             })
-            }
-          </select>
-         
-         
-        </div>
+          <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}</span>
+        </div>)
+    }else{
+      header =(<div style={{position: "relative",top:"37px"}}>
+      <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}: </span>
+      <select value={this.props.node.extras.color} onChange={this.handleColorChange}>
+        <option value='Blue'>Blue</option>
+        <option value='Green'>Green</option>
+        <option value='Orange'>Orange</option>
+        <option value='Red'>Red</option>
+      </select>
+      <select value={this.props.node.extras.securityRating} onChange={this.handleSecurityChange}>
+        {
+          this.getSystemRatingRange(this.props.node.extras.color).map((item,index) => {   
+          return (<option key={index} value={item} checked={this.selectIfRatingEqs(this.props.node.extras.securityRating,item)}>{item}</option>)
+          })
+        }
+      </select>
+    </div>)
+    }
+
+    return (
+        <div
+          style={{
+            position: 'relative',
+            width: this.props.node.width,
+            height: this.props.node.height,
+          }}>
+         {header}
         <svg width={this.props.node.extras.width} height={this.props.node.extras.height}>
           {this.getSVGInnerHTML(this.props.node.extras.text, this.props.node.extras.color, this.props.node.extras.systemType, this.props.node.id)}
         </svg>

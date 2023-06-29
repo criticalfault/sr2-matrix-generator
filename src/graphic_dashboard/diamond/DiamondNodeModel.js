@@ -12,10 +12,10 @@ export class DiamondNodeModel extends NodeModel {
     systemType = 'CPU'
   ) {
     super('diamond')
-    this.addPort(new DiamondPortModel('top'))
-    this.addPort(new DiamondPortModel('left'))
-    this.addPort(new DiamondPortModel('bottom'))
-    this.addPort(new DiamondPortModel('right'))
+    this.addPort(new DiamondPortModel('top',systemType))
+    this.addPort(new DiamondPortModel('left',systemType))
+    this.addPort(new DiamondPortModel('bottom',systemType))
+    this.addPort(new DiamondPortModel('right',systemType))
     this.extras.width = width
     this.extras.height = height
     this.extras.name = name

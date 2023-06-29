@@ -1,5 +1,4 @@
 import React from 'react';
-import * as _ from 'lodash'
 import { TrayWidget } from './tray_widget'
 import { TrayItemWidget } from './tray_item_widget'
 import { DefaultNodeModel, DiagramWidget, DiagramModel } from 'storm-react-diagrams'
@@ -33,7 +32,7 @@ export class BodyWidget extends React.Component {
     // Create a link element and trigger the download
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'project.json';
+    link.download = 'matrixProject.json';
     link.click();
   
     // Clean up by revoking the object URL
@@ -116,17 +115,62 @@ export class BodyWidget extends React.Component {
             />
             <h4 style={{color:'white'}}>IC</h4>
             <TrayItemWidget
-              model={{ type: 'out', name:'White IC', color:"White", subType:'', systemType:'IC', securityRating:1  }}
-              name="White IC"
+              model={{ type: 'diamond', name:'Access IC', color:"White", subType:'Access', systemType:'IC', securityRating:1  }}
+              name="Access IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'out', name:'Gray IC', color:"Gray", subType:'', systemType:'IC', securityRating:1  }}
-              name="Gray IC"
+              model={{ type: 'diamond', name:'Barrier IC', color:"White", subType:'Barrier', systemType:'IC', securityRating:1  }}
+              name="Barrier IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'out', name:'Black IC',  color:"Black", subType:'', systemType:'IC', securityRating:1  }}
+              model={{ type: 'diamond', name:'Scramble IC', color:"White", subType:'Scramble', systemType:'IC', securityRating:1  }}
+              name="Scramble IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Blaster IC', color:"Gray", subType:'Blaster', systemType:'IC', securityRating:1  }}
+              name="Blaster IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Killer IC', color:"Gray", subType:'Killer', systemType:'IC', securityRating:1  }}
+              name="Killer IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Tar Baby IC', color:"Gray", subType:'Tar_Baby', systemType:'IC', securityRating:1  }}
+              name="Tar Baby IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Tar Pit IC', color:"Gray", subType:'Tar_Pit', systemType:'IC', securityRating:1  }}
+              name="Tar Pit IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Trace IC', color:"Gray", subType:'Trace', systemType:'IC', securityRating:1  }}
+              name="Trace IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Trace And Report IC', color:"Gray", subType:'TraceReport', systemType:'IC', securityRating:1  }}
+              name="Trace And Report IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Trace And Dump IC', color:"Gray", subType:'TraceDump', systemType:'IC', securityRating:1  }}
+              name="Trace And Dump IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Trace And Burn IC', color:"Gray", subType:'TraceBurn', systemType:'IC', securityRating:1  }}
+              name="Trace And Burn IC"
+              color="rgb(255,255,255)"
+            />
+            <TrayItemWidget
+              model={{ type: 'diamond', name:'Black IC',  color:"Black", subType:'', systemType:'IC', securityRating:1  }}
               name="Black IC"
               color="rgb(255,255,255)"
             />
@@ -138,13 +182,6 @@ export class BodyWidget extends React.Component {
               const data = JSON.parse(
                 event.dataTransfer.getData('storm-diagram-node'),
               )
-              const nodesCount = _.keys(
-                this.props.app
-                  .getDiagramEngine()
-                  .getDiagramModel()
-                  .getNodes(),
-              ).length
-
               let node = null;
               
               if(data.type === 'out'){

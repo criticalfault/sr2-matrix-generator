@@ -1,6 +1,4 @@
-variable "SR3-DO" {
+variable "SR2-DO" {
   description = "Token from Digital Ocean"
   type        = string
 }
-
-variable "do_token" {}
