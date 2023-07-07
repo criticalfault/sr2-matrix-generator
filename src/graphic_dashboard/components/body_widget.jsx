@@ -115,62 +115,62 @@ export class BodyWidget extends React.Component {
             />
             <h4 style={{color:'white'}}>IC</h4>
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Access IC', color:"White", subType:'Access', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Access IC', color:"White", subType:'Access', systemType:'IC', securityRating:1  }}
               name="Access IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Barrier IC', color:"White", subType:'Barrier', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Barrier IC', color:"White", subType:'Barrier', systemType:'IC', securityRating:1  }}
               name="Barrier IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Scramble IC', color:"White", subType:'Scramble', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Scramble IC', color:"White", subType:'Scramble', systemType:'IC', securityRating:1  }}
               name="Scramble IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Blaster IC', color:"Gray", subType:'Blaster', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Blaster IC', color:"Gray", subType:'Blaster', systemType:'IC', securityRating:1  }}
               name="Blaster IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Killer IC', color:"Gray", subType:'Killer', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Killer IC', color:"Gray", subType:'Killer', systemType:'IC', securityRating:1  }}
               name="Killer IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Tar Baby IC', color:"Gray", subType:'Tar_Baby', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Tar Baby IC', color:"Gray", subType:'Tar_Baby', systemType:'IC', securityRating:1  }}
               name="Tar Baby IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Tar Pit IC', color:"Gray", subType:'Tar_Pit', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Tar Pit IC', color:"Gray", subType:'Tar_Pit', systemType:'IC', securityRating:1  }}
               name="Tar Pit IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Trace IC', color:"Gray", subType:'Trace', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Trace IC', color:"Gray", subType:'Trace', systemType:'IC', securityRating:1  }}
               name="Trace IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Trace And Report IC', color:"Gray", subType:'TraceReport', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Trace And Report IC', color:"Gray", subType:'TraceReport', systemType:'IC', securityRating:1  }}
               name="Trace And Report IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Trace And Dump IC', color:"Gray", subType:'TraceDump', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Trace And Dump IC', color:"Gray", subType:'TraceDump', systemType:'IC', securityRating:1  }}
               name="Trace And Dump IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Trace And Burn IC', color:"Gray", subType:'TraceBurn', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Trace And Burn IC', color:"Gray", subType:'TraceBurn', systemType:'IC', securityRating:1  }}
               name="Trace And Burn IC"
               color="rgb(255,255,255)"
             />
             <TrayItemWidget
-              model={{ type: 'diamond', name:'Black IC',  color:"Black", subType:'', systemType:'IC', securityRating:1  }}
+              model={{ type: 'out', name:'Black IC',  color:"Black", subType:'', systemType:'IC', securityRating:1  }}
               name="Black IC"
               color="rgb(255,255,255)"
             />
@@ -189,8 +189,6 @@ export class BodyWidget extends React.Component {
                   data.name,
                   'rgb(0,192,255)',
                 )
-                node.addInPort('In')
-                node.addOutPort('Out')
               }else{
                   node = new DiamondNodeModel(
                   data.name,
@@ -202,9 +200,7 @@ export class BodyWidget extends React.Component {
                   data.systemType
                 )
               }
-              
-              
-             
+
               var points = this.props.app
                 .getDiagramEngine()
                 .getRelativeMousePoint(event)
