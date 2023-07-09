@@ -421,11 +421,11 @@ export class DiamonNodeWidget extends React.Component {
     if(this.props.node.extras.systemType === "IC"){
       header =(
         <div style={{position: "relative",top:"37px"}}>
-          <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}</span>
+          <span style={{"fontSize": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}</span>
         </div>)
     }else{
       header =(<div style={{position: "relative",top:"37px"}}>
-      <span style={{"font-size": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}: </span>
+      <span style={{"fontSize": "14px"}}>{this.getTypeLabel(this.props.node.extras.text)}: </span>
       <select value={this.props.node.extras.color} onChange={this.handleColorChange}>
         <option value='Blue'>Blue</option>
         <option value='Green'>Green</option>
