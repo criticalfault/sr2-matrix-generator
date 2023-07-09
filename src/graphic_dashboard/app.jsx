@@ -1,8 +1,11 @@
 import * as SRD from 'storm-react-diagrams'
 
 import { DiamondNodeFactory } from './diamond/DiamondNodeFactory'
+import { ICNodeFactory } from './ic/ICNodeFactory'
 import { SimplePortFactory } from './diamond/SimplePortFactory'
 import { DiamondPortModel } from './diamond/DiamondPortModel'
+import { ICPortModel } from './ic/ICPortModel'
+
 
 export class Application {
   constructor() {
@@ -11,10 +14,17 @@ export class Application {
 
     this.diagramEngine.registerPortFactory(
       new SimplePortFactory('diamond', config => new DiamondPortModel()),
+      new SimplePortFactory('ic', config => new ICPortModel()),
     )
+
     this.diagramEngine.registerNodeFactory(
-      new DiamondNodeFactory({ width: 256, height: 162 }),
+      new DiamondNodeFactory({ width: 256, height: 162 })
     )
+    
+    this.diagramEngine.registerNodeFactory(
+      new ICNodeFactory({ width: 128, height: 81 })
+    )
+
     this.activeModel = new SRD.DiagramModel()
     this.activeModel.setGridSize(25)
     this.diagramEngine.setDiagramModel(this.activeModel)
