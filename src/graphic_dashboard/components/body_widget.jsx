@@ -40,6 +40,31 @@ export class BodyWidget extends React.Component {
     URL.revokeObjectURL(url);
   }
 
+  handleSavePlayerMap= (event) => {
+    let systemJSON =this.props.app.diagramEngine.diagramModel.serializeDiagram();
+    console.log(systemJSON);
+    //Now remove IC so the player will be in the dark!
+    let cleanNodes = [];
+    systemJSON.nodes.forEach(function(node){
+      if (node.type === 'ic'){ return; }      
+      cleanNodes.push(node);
+    });
+
+    systemJSON.nodes = cleanNodes;
+    systemJSON = JSON.stringify(systemJSON);
+    const blob = new Blob([systemJSON], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+  
+    // Create a link element and trigger the download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'matrixProjectPlayer.json';
+    link.click();
+  
+    // Clean up by revoking the object URL
+    URL.revokeObjectURL(url);
+  }
+
   handleLoadProject = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -65,6 +90,7 @@ export class BodyWidget extends React.Component {
             <div>
               <Button onClick={this.handleSaveProject} >Save Project</Button>              
               <Button onClick={this.handleModalOpen} >Load Project</Button><br></br>
+              <Button onClick={this.handleSavePlayerMap}>Save Player Map</Button>
               <Modal show={this.state.showModal} onHide={this.handleModalClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Upload Project</Modal.Title>
