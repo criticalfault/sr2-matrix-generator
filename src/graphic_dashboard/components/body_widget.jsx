@@ -38,6 +38,7 @@ export class BodyWidget extends React.Component {
   
     // Clean up by revoking the object URL
     URL.revokeObjectURL(url);
+    fathom.trackEvent('Saved 2nd Edition Matrix System - GM');
   }
 
   handleSavePlayerMap= (event) => {
@@ -63,6 +64,7 @@ export class BodyWidget extends React.Component {
   
     // Clean up by revoking the object URL
     URL.revokeObjectURL(url);
+    fathom.trackEvent('Saved 2nd Edition Matrix System - Player');
   }
 
   handleLoadProject = (event) => {
@@ -74,6 +76,7 @@ export class BodyWidget extends React.Component {
       newModal.deSerializeDiagram(JSON.parse(fileData), this.props.app.diagramEngine);
       this.props.app.getDiagramEngine().setDiagramModel(newModal);
       this.forceUpdate()
+      fathom.trackEvent('Loaded 2nd Edition Matrix System');
     }    
     reader.readAsText(file); 
   }
