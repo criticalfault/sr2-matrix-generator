@@ -5,6 +5,7 @@ import { DiagramWidget, DiagramModel } from 'storm-react-diagrams'
 import { DiamondNodeModel } from './../diamond/DiamondNodeModel'
 import { ICNodeModel } from '../ic/ICNodeModel';
 import { Button, Modal } from 'react-bootstrap'
+import html2canvas from 'html2canvas';
 
 export class BodyWidget extends React.Component {
   constructor(props) {
@@ -23,6 +24,20 @@ export class BodyWidget extends React.Component {
     this.setState({ showModal: true });
   };
 
+  handleSaveSVG = () => {
+    const divToSave = document.querySelector('.srd-demo-canvas');
+    html2canvas(divToSave)
+      .then((canvas) => {
+        // Create a link to download the canvas as an image
+        const link = document.createElement('a');
+        link.download = 'system-image.jpg';
+        link.href = canvas.toDataURL('image/jpeg');
+        link.click();
+      })
+      .catch(err => {
+        console.error('Error capturing canvas:', err);
+      });
+  };
 
   handleSaveProject = (event) => {
     //Serialize the Diagram, then offload it to the user!
@@ -91,9 +106,10 @@ export class BodyWidget extends React.Component {
           <TrayWidget>
             <h4 style={{color:'white'}}>Project Settings</h4>
             <div>
-              <Button onClick={this.handleSaveProject} >Save Project</Button>              
-              <Button onClick={this.handleModalOpen} >Load Project</Button><br></br>
-              <Button onClick={this.handleSavePlayerMap}>Save Player Map</Button>
+              <Button className='dashboardButton' onClick={this.handleSaveProject} >Save Project</Button>              
+              <Button className='dashboardButton' onClick={this.handleModalOpen} >Load Project</Button><br></br>
+              <Button className='dashboardButton' onClick={this.handleSavePlayerMap}>Save Player Map</Button>
+              <Button className='dashboardButton' onClick={this.handleSaveSVG}>Save JPEG</Button>
               <Modal show={this.state.showModal} onHide={this.handleModalClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Upload Project</Modal.Title>
