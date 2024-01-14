@@ -37,6 +37,7 @@ export class BodyWidget extends React.Component {
       .catch(err => {
         console.error('Error capturing canvas:', err);
       });
+      fathom.trackEvent('Saved JPEG of 2nd Edition Matrix System - GM'); // eslint-disable-line
   };
 
   handleSaveProject = (event) => {
@@ -53,7 +54,7 @@ export class BodyWidget extends React.Component {
   
     // Clean up by revoking the object URL
     URL.revokeObjectURL(url);
-    fathom.trackEvent('Saved 2nd Edition Matrix System - GM');
+    fathom.trackEvent('Saved 2nd Edition Matrix System - GM'); // eslint-disable-line
   }
 
   handleSavePlayerMap= (event) => {
@@ -79,7 +80,7 @@ export class BodyWidget extends React.Component {
   
     // Clean up by revoking the object URL
     URL.revokeObjectURL(url);
-    fathom.trackEvent('Saved 2nd Edition Matrix System - Player');
+    fathom.trackEvent('Saved 2nd Edition Matrix System - Player'); // eslint-disable-line
   }
 
   handleLoadProject = (event) => {
@@ -91,7 +92,7 @@ export class BodyWidget extends React.Component {
       newModal.deSerializeDiagram(JSON.parse(fileData), this.props.app.diagramEngine);
       this.props.app.getDiagramEngine().setDiagramModel(newModal);
       this.forceUpdate()
-      fathom.trackEvent('Loaded 2nd Edition Matrix System');
+      fathom.trackEvent('Loaded 2nd Edition Matrix System'); // eslint-disable-line
     }    
     reader.readAsText(file); 
   }
