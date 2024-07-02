@@ -7,6 +7,10 @@ import { ICNodeModel } from '../ic/ICNodeModel';
 import { Button, Modal } from 'react-bootstrap'
 import html2canvas from 'html2canvas';
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 export class BodyWidget extends React.Component {
   constructor(props) {
     super(props)
@@ -97,6 +101,78 @@ export class BodyWidget extends React.Component {
     reader.readAsText(file); 
   }
 
+  handleAutoGenerate = (event) => {
+    let nodeNum = 1;
+    let currentNode = "SPU-1";
+    let system = {
+      "NodeList":['SAN','SPU'],
+      "NodesLinkList":[
+        {
+          "name":"SAN-0",
+          "linkList":["SPU-1"]
+        },
+        {
+          "name":"SPU-1",
+          "linkList":[]
+        }
+      ],
+    };
+
+    for(var i = 0; i < 5; i++){
+      generateNode('SPU');
+    }
+
+
+  }
+
+  getSecurityCode = (color) => {
+    let ColorsObject = {
+      1:"Green",
+      2:"Green",
+      3:"Orange",
+      4:"Orange",
+      5:"Orange",
+      6:"Red"
+    }
+
+    return ColorsObject[getRandomInt(6)];
+  }
+
+  generateNode = (NodeType) => {
+    
+
+    let Nodes ={ 
+      
+      "CPU":{
+      1:"SPU",
+      2:"SPU",
+      3:"SPU",
+      4:"DS",
+      5:"DS",
+      6:"I/O"
+    },
+    "SPU": {
+      1:"CPU",
+      2:"SPU",
+      3:"DS",
+      4:"DS",
+      5:"I/O",
+      6:"I/O"
+    },
+     "DS": {
+      1:"CPU",
+      2:"CPU",
+      3:"SPU",
+      4:"SPU",
+      5:"SPU",
+      6:"DS"
+    }
+  }
+
+    return Nodes[NodeType][getRandomInt(6)];
+
+  }
+
   render() {
     return (
       <div className="body">
@@ -110,7 +186,8 @@ export class BodyWidget extends React.Component {
               <Button className='dashboardButton' onClick={this.handleSaveProject} >Save Project</Button>              
               <Button className='dashboardButton' onClick={this.handleModalOpen} >Load Project</Button><br></br>
               <Button className='dashboardButton' onClick={this.handleSavePlayerMap}>Save Player Map</Button>
-              <Button className='dashboardButton' onClick={this.handleSaveSVG}>Save JPEG</Button>
+              <Button className='dashboardButton' onClick={this.handleSaveSVG}>Save JPEG</Button><br></br>
+              <Button className='dashboardButton' onClick={this.handleAutoGenerate}>Generate System</Button>
               <Modal show={this.state.showModal} onHide={this.handleModalClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Upload Project</Modal.Title>
