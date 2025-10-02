@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { PortWidget } from 'storm-react-diagrams'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { FileManager } from '../components/FileManager'
 export class DiamonNodeWidget extends React.Component {
   constructor(props) {
     super(props)
@@ -416,6 +417,21 @@ export class DiamonNodeWidget extends React.Component {
     document.getElementById('node-color-'+this.props.node.id).style.fill = event.target.value;
   }
 
+  handleAddFile = (file) => {
+    if (!this.props.node.extras.files) {
+      this.props.node.extras.files = [];
+    }
+    this.props.node.extras.files.push(file);
+    this.forceUpdate(); // Force re-render to show the new file
+  }
+
+  handleRemoveFile = (index) => {
+    if (this.props.node.extras.files && this.props.node.extras.files.length > index) {
+      this.props.node.extras.files.splice(index, 1);
+      this.forceUpdate(); // Force re-render to show the updated list
+    }
+  }
+
   render() {
     var header = ''
     if(this.props.node.extras.systemType === "IC"){
@@ -442,6 +458,11 @@ export class DiamonNodeWidget extends React.Component {
     </div>)
     }
 
+    // Initialize files array if it doesn't exist for DS nodes
+    if (this.props.node.extras.systemType === 'DS' && !this.props.node.extras.files) {
+      this.props.node.extras.files = [];
+    }
+
     return (
         <div
           style={{
@@ -453,6 +474,17 @@ export class DiamonNodeWidget extends React.Component {
         <svg width={this.props.node.extras.width} height={this.props.node.extras.height}>
           {this.getSVGInnerHTML(this.props.node.extras.text, this.props.node.extras.color, this.props.node.extras.systemType, this.props.node.id)}
         </svg>
+
+        {/* File Manager for DataStore nodes */}
+        {this.props.node.extras.systemType === 'DS' && (
+          <div style={{ position: 'absolute', top: this.props.node.extras.height + 30, left: 0, width: this.props.node.extras.width }}>
+            <FileManager
+              files={this.props.node.extras.files || []}
+              onAddFile={this.handleAddFile}
+              onRemoveFile={this.handleRemoveFile}
+            />
+          </div>
+        )}
 
         <div
           style={{

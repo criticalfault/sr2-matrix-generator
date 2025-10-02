@@ -23,5 +23,7 @@ export class DiamondNodeModel extends NodeModel {
     this.extras.color = color
     this.extras.securityRating = securityRating
     this.extras.systemType = systemType
+    // Initialize files array for DataStore nodes
+    this.extras.files = []
   }
 }
